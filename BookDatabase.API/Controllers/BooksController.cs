@@ -19,7 +19,8 @@ namespace BookDatabase.API.Controllers
         public IEnumerable<Book> Get()
         {
             var bookRepository = new BookRepository();
-            return bookRepository.Retrieve();
+               
+            return bookRepository.Retrieve(); ;
         }
 
         // GET: api/Books/5

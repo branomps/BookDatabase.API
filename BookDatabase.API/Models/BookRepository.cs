@@ -1,7 +1,11 @@
-﻿using System.Data.Entity;
+﻿using System;
+using System.Data.Entity;
 using Newtonsoft.Json;
+using System.Web.Hosting;
 using System.Collections.Generic;
 using System.Linq;
+using System.Web;
+using BookDatabase;
 
 
 namespace BookDatabase.API.Models
@@ -30,11 +34,12 @@ namespace BookDatabase.API.Models
         {
             var books = _context.Books.Include(a => a.Author).Include(p => p.Publisher).Include(e => e.Edition).ToList();
             //var result = string.Join("", books);
-            //string output = new JavaScriptSerializer().Serialize(books);
-            var output = JsonConvert.SerializeObject(books);
-            var jsbooks = JsonConvert.DeserializeObject<List<Book>>(output);
+            //string jsbooks = new JavaScriptSerializer().Serialize(books);
+            //var output = JsonConvert.SerializeObject(books);
+            //var jsbooks = JsonConvert.DeserializeObject<List<Book>>(output);
+            //var jsbooks = JsonConvert.SerializeObject(books, Formatting.Indented);
 
-            return jsbooks;
+            return books;
         }
 
         /// <summary>
@@ -89,8 +94,8 @@ namespace BookDatabase.API.Models
             //var filePath = HostingEnvironment.MapPath(@"~/App_Data/product.json");
             //Serialize collection
             var json = JsonConvert.SerializeObject(books, Formatting.Indented);
-          
-            foreach(var book in json)
+            var jsbooks = JsonConvert.DeserializeObject<List<Book>>(json);
+            foreach (var book in jsbooks)
             {
                 _context.Books.AddRange(books);
             }

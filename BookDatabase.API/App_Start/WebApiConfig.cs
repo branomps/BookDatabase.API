@@ -20,6 +20,9 @@ namespace BookDatabase.API
             // Web API routes
             config.MapHttpAttributeRoutes();
 
+            config.Formatters.JsonFormatter.SerializerSettings.ContractResolver =
+              new CamelCasePropertyNamesContractResolver();
+
             config.EnableCors();
 
             config.Routes.MapHttpRoute(
