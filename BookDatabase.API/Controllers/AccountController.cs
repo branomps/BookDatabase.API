@@ -16,6 +16,7 @@ using Microsoft.Owin.Security.OAuth;
 using BookDatabase.API.Models;
 using BookDatabase.API.Providers;
 using BookDatabase.API.Results;
+using CorsApi;
 
 namespace BookDatabase.API.Controllers
 {
