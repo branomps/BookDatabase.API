@@ -15,6 +15,7 @@ namespace BookDatabase.API.Controllers
     {
 
         // GET: api/Books
+        [HttpGet]
         [EnableQuery()]
         public IQueryable<Book> Get()
         {
@@ -39,20 +40,25 @@ namespace BookDatabase.API.Controllers
             }
             return book;
         }
-
+        [HttpPost]
         // POST: api/Books
-        public void Post([FromBody]string value)
+        public void Post([FromBody]Book book)
         {
+            var bookRepository = new Models.BookRepository();
+            var newBook = bookRepository.Save(book);
         }
 
         // PUT: api/Books/5
-        public void Put(int id, [FromBody]string value)
+        public void Put(int id, [FromBody]Book book)
         {
+            var bookRepository = new Models.BookRepository();
+            var updateBook = bookRepository.Save(id, book);
         }
 
         // DELETE: api/Books/5
         public void Delete(int id)
         {
+            var bookRepository = new Models.BookRepository();
         }
     }
 }

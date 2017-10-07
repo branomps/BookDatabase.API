@@ -302,6 +302,9 @@
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
+    <Content Include="Images\CSharp5.0InANutshell.jpg" />
+    <Content Include="Images\McsdCetificationToolkit.jpg" />
+    <Content Include="Images\ProgramingInHtml5WithJavaScriptAndCss3.jpg" />
     <Content Include="Models\BookModel.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>BookModel.edmx</DependentUpon>
