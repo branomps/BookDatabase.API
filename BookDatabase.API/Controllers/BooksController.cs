@@ -6,6 +6,7 @@ using System.Net;
 using System.Net.Http;
 using System.Web.Http;
 using System.Web.Http.Cors;
+using System.Web.Http.OData;
 
 namespace BookDatabase.API.Controllers
 {
@@ -14,19 +15,29 @@ namespace BookDatabase.API.Controllers
     {
 
         // GET: api/Books
-       // [EnableCorsAttribute("http://localhost:53269", "*", "*")]
-        [EnableCors("http://localhost:53366", "*", "*")]
-        public IEnumerable<Book> Get()
+        [EnableQuery()]
+        public IQueryable<Book> Get()
         {
             var bookRepository = new BookRepository();
-               
-            return bookRepository.Retrieve(); ;
+              
+            return bookRepository.Retrieve().AsQueryable(); 
         }
 
         // GET: api/Books/5
-        public string Get(int id)
+        public Book Get(int id)
         {
-            return "value";
+            Book book;
+            var bookRepository = new BookRepository();
+            if(id>0)
+            {
+                var books = bookRepository.Retrieve();
+                book = books.FirstOrDefault(p => p.BookID == id);
+            }
+            else
+            {
+                book = bookRepository.Create();
+            }
+            return book;
         }
 
         // POST: api/Books
