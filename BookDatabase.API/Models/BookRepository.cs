@@ -6,13 +6,15 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using BookDatabase;
-
+using EntityFramework.BulkExtensions;
 
 namespace BookDatabase.API.Models
 {
     public class BookRepository
     {
         private readonly BookContext _context = new BookContext();
+        
+
         /// <summary>
         /// Creates a new book with default values
         /// </summary>
@@ -32,6 +34,7 @@ namespace BookDatabase.API.Models
         /// <returns></returns>
         internal List<Book> Retrieve()
         {
+           
             var books = _context.Books.Include(a => a.Author).Include(p => p.Publisher).Include(e => e.Edition).ToList();
             //var result = string.Join("", books);
             //string jsbooks = new JavaScriptSerializer().Serialize(books);
@@ -47,61 +50,50 @@ namespace BookDatabase.API.Models
         /// </summary>
         /// <param name="book"></param>
         /// <returns></returns>
-        internal Book Save(Book book)
-        {
-            // Read in the existing products
-            var books = this.Retrieve();
+        //internal Book Save(Book book)
+        //{
+        //    // Read in the existing products
+        //    var books = this.Retrieve();
 
-            // Assign a new Id
-            var maxId = books.Max(p => p.BookID);
-            book.BookID = maxId + 1;
-            books.Add(book);
+        //    // Assign a new Id
+        //    var maxId = books.Max(p => p.BookID);
+        //    book.BookID = maxId + 1;
+        //    _context.Books.Add(book);
+        //    _context.SaveChanges();
+            
+        //    return book;
+        //}
 
-            WriteData(books);
-            return book;
-        }
+        ///// <summary>
+        ///// Updates an existing product
+        ///// </summary>
+        ///// <param name="id"></param>
+        ///// <param name="book"></param>
+        ///// <returns></returns>
+        //internal Book Save(int id, Book book)
+        //{
+        //    // Read in the existing products
+        //    var books = this.Retrieve();
 
-        /// <summary>
-        /// Updates an existing product
-        /// </summary>
-        /// <param name="id"></param>
-        /// <param name="book"></param>
-        /// <returns></returns>
-        internal Book Save(int id, Book book)
-        {
-            // Read in the existing products
-            var books = this.Retrieve();
+        //    // Locate and replace the item
+        //    var itemIndex = books.FindIndex(p => p.BookID == book.BookID);
+        //    var updateBook = books.FirstOrDefault(p => p.BookID == book.BookID);
+        //    if (itemIndex > 0)
+        //    {
+        //        _context.Entry(updateBook).State= System.Data.Entity.EntityState.Modified;
+        //        _context.SaveChanges();
 
-            // Locate and replace the item
-            var itemIndex = books.FindIndex(p => p.BookID == book.BookID);
-            if (itemIndex > 0)
-            {
-                books[itemIndex] = book;
-            }
-            else
-            {
-                return null;
-            }
+        //    }
+        //    else
+        //    {
+        //        return updateBook;
+        //    }
 
-            WriteData(books);
-            return book;
-        }
+            
+        //    return updateBook;
+        //}
 
+         
 
-        private bool WriteData(List<Book> books)
-        {
-            // Write out the Json
-            //var filePath = HostingEnvironment.MapPath(@"~/App_Data/product.json");
-            //Serialize collection
-            var json = JsonConvert.SerializeObject(books, Formatting.Indented);
-            var jsbooks = JsonConvert.DeserializeObject<List<Book>>(json);
-            foreach (var book in jsbooks)
-            {
-                _context.Books.AddRange(books);
-            }
-            _context.SaveChanges();
-
-            return true;
-        }
     }
 }

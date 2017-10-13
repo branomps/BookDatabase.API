@@ -23,7 +23,7 @@ namespace BookDatabase.API.Controllers
               
             return bookRepository.Retrieve().AsQueryable(); 
         }
-
+        [HttpGet]
         // GET: api/Books/5
         public Book Get(int id)
         {
@@ -40,25 +40,27 @@ namespace BookDatabase.API.Controllers
             }
             return book;
         }
-        [HttpPost]
-        // POST: api/Books
-        public void Post([FromBody]Book book)
-        {
-            var bookRepository = new Models.BookRepository();
-            var newBook = bookRepository.Save(book);
-        }
 
-        // PUT: api/Books/5
-        public void Put(int id, [FromBody]Book book)
-        {
-            var bookRepository = new Models.BookRepository();
-            var updateBook = bookRepository.Save(id, book);
-        }
+        //[HttpPost]
+        //// POST: api/Books
+        //public void Post([FromBody]Book book)
+        //{
+        //    var bookRepository = new Models.BookRepository();
+        //    var newBook = bookRepository.Save(book);
+        //}
 
-        // DELETE: api/Books/5
-        public void Delete(int id)
-        {
-            var bookRepository = new Models.BookRepository();
-        }
+        //// PUT: api/Books/5
+        //public void Put(int id, [FromBody]Book book)
+        //{
+        //    var bookRepository = new Models.BookRepository();
+        //    var updateBook = bookRepository.Save(id, book);
+        //}
+
+        //// DELETE: api/Books/5
+        //public void Delete(int id)
+        //{
+        //    var bookRepository = new Models.BookRepository();
+        //    //var delete = bookRepository.Delete(id);
+        //}
     }
 }
